@@ -9,11 +9,17 @@ window.onload= function(){
 }
 
 function setGame(){
+    // board=[
+    //     [0,0,0,0],
+    //     [0,0,0,0],
+    //     [0,0,0,0],
+    //     [0,0,0,0]
+    // ]
     board=[
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0]
+        [2,2,2,2],
+        [2,2,2,2],
+        [4,4,8,8],
+        [4,4,8,8]
     ]
     for(let r=0;r<rows;r++){
         for(let c=0;c<columns;c++){
@@ -29,7 +35,7 @@ function setGame(){
 
 function updateTile(tile,num){
     tile.innerText="";
-    tile.class.value=""; 
+    tile.classList.value=""; 
     // CLEAR THE CLASSLIST
     tile.classList.add("tile");
     if(num>0){
@@ -42,3 +48,52 @@ function updateTile(tile,num){
         }
     }
 }   
+
+document.addEventListener("keyup",(e)=>{
+    if(e.code=="Arrowleft"){
+        
+    }
+})
+
+function filterZero(row){
+    return row.filter(num=> num!=0);
+    // create anew array without zeroes
+}
+
+function slide(row){
+    // [0,2,2,2]
+    row= filterZero(row);  //get rid of zeroes->[2,2,2]
+
+    //slide
+    for(let i=0;i<rows.length-1;i++){
+        //check every 2
+        if(row[i]==row[i+1]){
+            row[i]*=2;
+            row[i+1]=0;
+            score+=row[i];
+        }//[2,2,2]->[4,0,2]
+    }
+
+
+    row= filterZero(row); //[4,2]
+  //add zeroes
+
+  while(row.length<columns){
+    row.push(0);
+  }//[4,2,0,0]
+  return row;
+}
+
+function slideLeft(){
+  for(let r=0;r<rows;r++){
+    let row=board[r];
+    row=slide(row);
+    board[r]=row;
+
+    for(let c=0;c<columns;c++){
+        let tile=document.getElementById(r.toString()+"-"+ c.toString());
+        let num=board[r][c];
+        updateTile(tile,num);
+    }
+  }
+}
