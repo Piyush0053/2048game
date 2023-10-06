@@ -34,7 +34,7 @@ function setGame(){
 }
 
 function updateTile(tile,num){
-    tile.innerText="";
+    tile.innerText="";w
     tile.classList.value=""; 
     // CLEAR THE CLASSLIST
     tile.classList.add("tile");
